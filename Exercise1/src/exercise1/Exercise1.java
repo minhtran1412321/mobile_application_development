@@ -105,8 +105,16 @@ public class Exercise1 {
     }
     
     private static void generateDistance(double sourceLongitude, double sourceLatitude, double destLongitude, double destLatitude) throws IOException {
-        String url = "http://127.0.0.1:3000/users?lat1=" + sourceLatitude + "&lon1=" + sourceLongitude + "&lat2=" + destLatitude + "&lon2=" + destLongitude;
+        String url = "https://mobile-dev-subject-exercise1.herokuapp.com/users?lat1=" + sourceLatitude + "&lon1=" + sourceLongitude + "&lat2=" + destLatitude + "&lon2=" + destLongitude;
         StringBuffer response = getDataFromApi(url);
+        try {
+            JSONObject jsonObj = new JSONObject(response.toString());
+            double distance = jsonObj.getDouble("distance");
+            System.out.printf("Distance: %.2f km \n", distance);
+
+        } catch (JSONException ex) {
+            Logger.getLogger(Exercise1.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -123,7 +131,7 @@ public class Exercise1 {
                 System.out.print("Could not find the address!");
             } else {
                 String address = results.getJSONObject(0).getString("formatted_address");
-                System.out.println(address);
+                System.out.println("Address: " + address);
             }
 
         } catch (JSONException ex) {
@@ -142,7 +150,7 @@ public class Exercise1 {
         con.setRequestProperty("User-Agent", USER_AGENT);
 
         int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
+        //System.out.println("\nSending 'GET' request to URL : " + url);
         //System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(
@@ -156,7 +164,7 @@ public class Exercise1 {
         in.close();
 
         //print result
-        System.out.println(response.toString());
+        //System.out.println(response.toString());
         return response;
     }
 
