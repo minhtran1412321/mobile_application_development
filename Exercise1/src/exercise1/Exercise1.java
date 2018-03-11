@@ -33,7 +33,7 @@ public class Exercise1 {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        System.out.println("hello");
+        System.out.println("Hello!");
         askUserToChooseExercise();
 
         reader.close();
@@ -42,7 +42,7 @@ public class Exercise1 {
     private static void askUserToChooseExercise() throws IOException {
         boolean intFound = false;
         while (!intFound) {
-            System.out.println("Enter a number 1 for exercise 1, 2 for exercise 2: ");
+            System.out.println("Enter number:\n 1. To find address for given coordinate(exercise 1) \n 2. To calculate distance from 2 coordinates(exercise 2) ");
             if (reader.hasNextInt()) {
                 intFound = true;
                 int option = reader.nextInt();
@@ -103,14 +103,18 @@ public class Exercise1 {
         }
         return 0.0;
     }
-    
+
     private static void generateDistance(double sourceLongitude, double sourceLatitude, double destLongitude, double destLatitude) throws IOException {
         String url = "https://mobile-dev-subject-exercise1.herokuapp.com/users?lat1=" + sourceLatitude + "&lon1=" + sourceLongitude + "&lat2=" + destLatitude + "&lon2=" + destLongitude;
         StringBuffer response = getDataFromApi(url);
         try {
             JSONObject jsonObj = new JSONObject(response.toString());
             double distance = jsonObj.getDouble("distance");
-            System.out.printf("Distance: %.2f km \n", distance);
+            if (distance != 0) {
+                System.out.printf("Distance: %.2f km \n", distance);
+            } else {
+                System.out.println("Could not calculate distance!");
+            }
 
         } catch (JSONException ex) {
             Logger.getLogger(Exercise1.class.getName()).log(Level.SEVERE, null, ex);
@@ -138,7 +142,7 @@ public class Exercise1 {
             Logger.getLogger(Exercise1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private static StringBuffer getDataFromApi(String url) throws MalformedURLException, IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
