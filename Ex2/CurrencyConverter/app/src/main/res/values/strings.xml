@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CurrencyConverter</string>
+    <string name="currency_from_prompt">Choose a currency to convert from </string>
+    <string name="currency_to_prompt">Choose a currency to convert to </string>
+
+    <string-array name="currency_arrays">
+        <item>VND</item>
+        <item>USD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>AUD</item>
+        <item>JPY</item>
+        <item>CNY</item>
+    </string-array>
+</resources>
